@@ -1,25 +1,23 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-
-interface Post {
-    content: string;
-    date: string;
-    username: string;
-}
+import { usePosts } from '../context/PostContext';
+import { useAuth } from '../context/AuthContext';
+import Link from 'next/link';
 
 const Feed = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [friendPosts, setFriendPosts] = useState<Post[]>([]);
     const [friends, setFriends] = useState<string[]>([]);
+    const { posts } = usePosts();
+    const { currentUser } = useAuth();
 
     useEffect(() => {
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-        const storedPosts = JSON.parse(localStorage.getItem('posts') || '[]') as Post[];
-        const storedFriends = JSON.parse(localStorage.getItem('friends') || '{}')[currentUser.username] || [];
+        const currentUserData = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+        const storedFriends = JSON.parse(localStorage.getItem('friends') || '{}')[currentUserData.username] || [];
         setFriends(storedFriends);
-        const friendPosts = storedPosts.filter(post => storedFriends.includes(post.username));
-        setPosts(friendPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
-    }, []);
+        const filteredPosts = posts.filter(post => storedFriends.includes(post.username));
+        setFriendPosts(filteredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+    }, [posts, currentUser]);
 
     const seedPosts = () => {
         const samplePosts = [
@@ -31,22 +29,29 @@ const Feed = () => {
         ];
 
         localStorage.setItem('posts', JSON.stringify(samplePosts));
-        const currentUser = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
-        const storedFriends = JSON.parse(localStorage.getItem('friends') || '{}')[currentUser.username] || [];
-        const friendPosts = samplePosts.filter(post => storedFriends.includes(post.username));
-        setPosts(friendPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+        const currentUserData = JSON.parse(sessionStorage.getItem('currentUser') || '{}');
+        const storedFriends = JSON.parse(localStorage.getItem('friends') || '{}')[currentUserData.username] || [];
+        const filteredPosts = samplePosts.filter(post => storedFriends.includes(post.username));
+        setFriendPosts(filteredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
     };
 
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">Feed</h1>
-            <ul>
-                {posts.map((post, index) => (
-                    <li key={index} className="p-4 bg-white rounded shadow-sm">
-                        {post.content} - {new Date(post.date).toLocaleString()}
-                    </li>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {friendPosts.map((post, index) => (
+                    <div key={index} className="p-4 bg-white rounded shadow-sm">
+                        <Link href={`/${post.username}`}>
+                            <span className="font-bold text-primary cursor-pointer">{post.username}</span>
+                        </Link>
+                        <p className="text-gray-700">{post.content}</p>
+                        <p className="text-gray-500 text-sm">{new Date(post.date).toLocaleString()}</p>
+                    </div>
                 ))}
-            </ul>
+            </div>
+            <button onClick={seedPosts} className="mt-4 bg-primary text-white p-2 rounded hover:bg-pink-600">
+                Seed Posts
+            </button>
         </div>
     );
 };

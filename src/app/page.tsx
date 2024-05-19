@@ -1,7 +1,6 @@
 'use client';
 
 import Home from './home';
-import Feed from './feed/page';
 
 
 const Page = () => {

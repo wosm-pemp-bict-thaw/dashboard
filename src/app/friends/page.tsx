@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 interface User {
     username: string;
@@ -34,16 +35,19 @@ const Friends = () => {
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold mb-4">My Friends</h1>
-            <ul className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {friends.map((friend, index) => (
-                    <li key={index} className="p-4 bg-white rounded shadow-sm">
-                        {friend}
+                    <div key={index} className="p-4 bg-white rounded shadow-sm flex justify-between items-center">
+                        <Link href={`/${friend}`}>
+                            <span className="font-bold text-primary cursor-pointer">{friend}</span>
+                        </Link>
                         <button onClick={() => handleUnfriend(friend)}
-                                className="ml-4 bg-red-500 text-white p-2 rounded">Unfriend
+                                className="bg-red-500 text-white p-2 rounded hover:bg-red-600">
+                            Unfriend
                         </button>
-                    </li>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
