@@ -1,15 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 const SignOut = () => {
-    const router = useRouter();
-
     useEffect(() => {
         sessionStorage.removeItem('currentUser');
-        router.push('/');
-    }, [router]);
+    }, []);
 
     return (
         <div className="container mx-auto p-4">
