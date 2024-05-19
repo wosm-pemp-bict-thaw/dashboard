@@ -30,12 +30,15 @@ const Friends = () => {
     };
 
     return (
-        <div>
-            <h1>My Friends</h1>
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">My Friends</h1>
             <ul>
                 {friends.map((friend, index) => (
-                    <li key={index}>
-                        {friend} <button onClick={() => handleUnfriend(friend)}>Unfriend</button>
+                    <li key={index} className="p-4 bg-white rounded shadow">
+                        {friend}
+                        <button onClick={() => handleUnfriend(friend)}
+                                className="ml-4 bg-red-500 text-white p-2 rounded">Unfriend
+                        </button>
                     </li>
                 ))}
             </ul>

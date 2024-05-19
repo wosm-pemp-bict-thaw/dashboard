@@ -35,20 +35,21 @@ const SignUp = () => {
     };
 
     return (
-        <div>
-            <h1>Sign Up</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">Sign Up</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                    <label>Username</label>
-                    <input {...register('username')} />
-                    {errors.username && <p>{errors.username.message}</p>}
+                    <label className="block text-sm font-medium">Username</label>
+                    <input {...register('username')} className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
+                    {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
                 </div>
                 <div>
-                    <label>Password</label>
-                    <input type="password" {...register('password')} />
-                    {errors.password && <p>{errors.password.message}</p>}
+                    <label className="block text-sm font-medium">Password</label>
+                    <input type="password" {...register('password')}
+                           className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
+                    {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                 </div>
-                <button type="submit">Sign Up</button>
+                <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded">Sign Up</button>
             </form>
         </div>
     );

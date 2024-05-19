@@ -48,16 +48,16 @@ const UserProfile = () => {
     };
 
     return (
-        <div>
-            <h1>{username}'s Profile</h1>
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">{username}'s Profile</h1>
             {!isOwnProfile && (
-                <button onClick={handleFriendToggle}>
+                <button onClick={handleFriendToggle} className="bg-blue-500 text-white p-2 rounded">
                     {isFriend ? 'Unfriend' : 'Befriend'}
                 </button>
             )}
             <ul>
                 {posts.map((post, index) => (
-                    <li key={index}>
+                    <li key={index} className="p-4 bg-white rounded shadow">
                         {post.content} - {new Date(post.date).toLocaleString()}
                     </li>
                 ))}

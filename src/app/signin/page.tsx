@@ -19,20 +19,22 @@ const SignIn = () => {
     };
 
     return (
-        <div>
-            <h1>Sign In</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">Sign In</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
-                    <label>Username</label>
-                    <input {...register('username', { required: true })} />
-                    {errors.username && <p>Username is required</p>}
+                    <label className="block text-sm font-medium">Username</label>
+                    <input {...register('username', {required: true})}
+                           className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
+                    {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
                 </div>
                 <div>
-                    <label>Password</label>
-                    <input type="password" {...register('password', { required: true })} />
-                    {errors.password && <p>Password is required</p>}
+                    <label className="block text-sm font-medium">Password</label>
+                    <input type="password" {...register('password', {required: true})}
+                           className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
+                    {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
                 </div>
-                <button type="submit">Sign In</button>
+                <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded">Sign In</button>
             </form>
         </div>
     );

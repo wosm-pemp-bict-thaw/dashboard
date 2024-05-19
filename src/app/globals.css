@@ -1,36 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  @apply bg-gray-100 text-gray-900 antialiased;
 }
 
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #dee2e6;
+  @apply flex justify-between items-center py-3 px-5 bg-gray-100 border-b border-gray-200;
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: bold;
+  @apply text-2xl font-bold;
 }
 
 ul {
-  list-style: none;
-  display: flex;
-  gap: 10px;
+  @apply flex gap-4 list-none p-0 m-0;
 }
 
 ul li {
-  margin: 0;
+  @apply m-0;
 }
 
 ul li a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-ul li a:hover {
-  text-decoration: underline;
+  @apply text-blue-500 hover:underline;
 }

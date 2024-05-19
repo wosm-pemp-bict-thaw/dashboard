@@ -12,8 +12,8 @@ const SignOut = () => {
     }, [router]);
 
     return (
-        <div>
-            <h1>Signed Out</h1>
+        <div className="container mx-auto p-4">
+            <h1 className="text-3xl font-bold mb-4">Signed Out</h1>
             <p>You have been signed out successfully.</p>
         </div>
     );
