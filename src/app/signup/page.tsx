@@ -4,21 +4,34 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
-    username: yup.string().matches(/^[a-zA-Z0-9_]+$/, 'Username must be alphanumeric with underscores only').required(),
-    password: yup.string().test('is-valid', 'Invalid password', value => {
-        if (!value) return false;
-        for (let i = 0; i < value.length; i++) {
-            if (i > 1 && (value[i] === value[i - 1] || value[i] === value[i - 2])) {
-                return false;
+    username: yup.string()
+        .matches(/^[a-zA-Z0-9_]+$/, 'Username must be alphanumeric with underscores only')
+        .required('Username is required'),
+    password: yup.string()
+        .test('is-valid', 'Invalid password', value => {
+            if (!value) return false;
+            // Check if any character appears more than twice
+            const charCount = {};
+            for (let i = 0; i < value.length; i++) {
+                const char = value[i];
+                if (!charCount[char]) {
+                    charCount[char] = 0;
+                }
+                charCount[char]++;
+                if (charCount[char] > 2) {
+                    return false;
+                }
+                // Check if character at index i is different from characters at indices i-1 and i-2
+                if (i > 1 && (value[i] === value[i - 1] || value[i] === value[i - 2])) {
+                    return false;
+                }
             }
-            if (value.split(value[i]).length > 3) {
-                return false;
-            }
-        }
-        return true;
-    }).required()
+            return true;
+        })
+        .required('Password is required')
 });
 
 const SignUp = () => {
@@ -29,8 +42,13 @@ const SignUp = () => {
 
     const onSubmit = (data) => {
         const users = JSON.parse(localStorage.getItem('users') || '[]');
+        if (users.find(user => user.username === data.username)) {
+            toast.error('Username already exists');
+            return;
+        }
         users.push(data);
         localStorage.setItem('users', JSON.stringify(users));
+        toast.success('Sign up successful');
         router.push('/signin');
     };
 
@@ -40,13 +58,12 @@ const SignUp = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium">Username</label>
-                    <input {...register('username')} className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
+                    <input {...register('username')} className="mt-1 block w-full p-2 border border-gray-300 rounded" />
                     {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium">Password</label>
-                    <input type="password" {...register('password')}
-                           className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
+                    <input type="password" {...register('password')} className="mt-1 block w-full p-2 border border-gray-300 rounded" />
                     {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
                 </div>
                 <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded">Sign Up</button>

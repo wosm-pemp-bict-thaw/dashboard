@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "next lint --fix"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.0",
@@ -14,6 +15,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
+    "react-toastify": "^10.0.5",
     "yup": "^1.4.0"
   },
   "devDependencies": {

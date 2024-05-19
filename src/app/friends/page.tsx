@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 interface User {
     username: string;
@@ -27,6 +28,7 @@ const Friends = () => {
         storedFriends[currentUser.username] = updatedFriends;
         localStorage.setItem('friends', JSON.stringify(storedFriends));
         setFriends(updatedFriends);
+        toast.success(`${friendUsername} has been removed from your friends.`);
     };
 
     return (

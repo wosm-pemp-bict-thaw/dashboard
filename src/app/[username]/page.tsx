@@ -49,7 +49,7 @@ const UserProfile = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">{username}'s Profile</h1>
+            <h1 className="text-3xl font-bold mb-4">{username}&#39;s Profile</h1>
             {!isOwnProfile && (
                 <button onClick={handleFriendToggle} className="bg-blue-500 text-white p-2 rounded">
                     {isFriend ? 'Unfriend' : 'Befriend'}
