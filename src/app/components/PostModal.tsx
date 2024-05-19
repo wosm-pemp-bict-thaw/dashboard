@@ -2,19 +2,27 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import { usePosts } from '../context/PostContext';
+import { useAuth } from '../context/AuthContext';
 
 interface PostModalProps {
     isOpen: boolean;
     closeModal: () => void;
-    onSubmit: (message: string) => void;
 }
 
-const PostModal: React.FC<PostModalProps> = ({ isOpen, closeModal, onSubmit }) => {
+const PostModal: React.FC<PostModalProps> = ({ isOpen, closeModal }) => {
     const [message, setMessage] = useState('');
+    const { addPost } = usePosts();
+    const { currentUser } = useAuth();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(message);
+        const newPost = {
+            content: message,
+            date: new Date().toISOString(),
+            username: currentUser?.username || 'Anonymous',
+        };
+        addPost(newPost);
         setMessage('');
         closeModal();
     };
@@ -50,14 +58,14 @@ const PostModal: React.FC<PostModalProps> = ({ isOpen, closeModal, onSubmit }) =
                                     New Post
                                 </Dialog.Title>
                                 <form onSubmit={handleSubmit} className="mt-4">
-                  <textarea
-                      className="w-full p-2 border border-gray-300 rounded mt-1"
-                      rows={4}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Write your message here..."
-                      required
-                  />
+                                    <textarea
+                                        className="w-full p-2 border border-gray-300 rounded mt-1"
+                                        rows={4}
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        placeholder="Write your message here..."
+                                        required
+                                    />
                                     <div className="mt-4">
                                         <button
                                             type="submit"

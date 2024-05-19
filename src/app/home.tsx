@@ -1,21 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { usePosts } from './context/PostContext'
 import Link from 'next/link';
 
-interface Post {
-    content: string;
-    date: string;
-    username: string;
-}
-
 const Home = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
-
-    useEffect(() => {
-        const storedPosts = JSON.parse(localStorage.getItem('posts') || '[]') as Post[];
-        setPosts(storedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
-    }, []);
+    const { posts } = usePosts();
 
     return (
         <div className="container mx-auto p-4">
