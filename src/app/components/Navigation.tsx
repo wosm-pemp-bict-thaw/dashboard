@@ -1,25 +1,17 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react'; // Import useState here
 import { Menu } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, PlusIcon } from '@heroicons/react/24/outline';
 import PostModal from './PostModal';
 import { ToastContainer, toast } from 'react-toastify';
+import { useAuth } from '../context/AuthContext';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Navigation = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [currentUser, setCurrentUser] = useState<{ username: string } | null>(null);
+    const { isAuthenticated, currentUser, signOut } = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const pathname = usePathname();
-
-    useEffect(() => {
-        const user = JSON.parse(sessionStorage.getItem('currentUser') || 'null');
-        setIsAuthenticated(!!user);
-        setCurrentUser(user);
-    }, [pathname]);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);

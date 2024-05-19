@@ -1,11 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const SignOut = () => {
+    const { signOut } = useAuth();
+
     useEffect(() => {
-        sessionStorage.removeItem('currentUser');
-    }, []);
+        signOut();
+    }, [signOut]);
 
     return (
         <div className="container mx-auto p-4">
