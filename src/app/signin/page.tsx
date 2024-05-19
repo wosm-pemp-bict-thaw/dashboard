@@ -26,15 +26,18 @@ const SignIn = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium">Username</label>
-                    <input {...register('username', { required: true })} className="mt-1 block w-full p-2 border border-gray-300 rounded" />
+                    <input {...register('username', {required: true})}
+                           className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
                     {errors.username && <p className="text-red-500 text-sm">Username is required</p>}
                 </div>
                 <div>
                     <label className="block text-sm font-medium">Password</label>
-                    <input type="password" {...register('password', { required: true })} className="mt-1 block w-full p-2 border border-gray-300 rounded" />
+                    <input type="password" {...register('password', {required: true})}
+                           className="mt-1 block w-full p-2 border border-gray-300 rounded"/>
                     {errors.password && <p className="text-red-500 text-sm">Password is required</p>}
                 </div>
-                <button type="submit" className="mt-4 bg-blue-500 text-white p-2 rounded">Sign In</button>
+                <button type="submit" className="mt-4 bg-primary text-white p-2 rounded hover:bg-pink-600">Sign In
+                </button>
             </form>
         </div>
     );

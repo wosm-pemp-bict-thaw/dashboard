@@ -8,13 +8,17 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        primary: '#ff69b4',
+      },
+      fontFamily: {
+        mono: ['monospace', 'ui-monospace', 'SFMono-Regular'],
+        sans: ['"Helvetica Neue"', 'Arial', 'sans-serif'],
+        serif: ['"Times New Roman"', 'serif'],
       },
     },
   },
   plugins: [],
 };
+
 export default config;
